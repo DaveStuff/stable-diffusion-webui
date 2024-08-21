@@ -7,8 +7,6 @@
 ### Edit the following arrays to suit your workflow - values must be quoted and separated by newlines or spaces.
 ### If you specify gated models you'll need to set environment variables HF_TOKEN and/orf CIVITAI_TOKEN
 
-CIVITAI_TOKEN="917397b9e6765676893ea733df606abb"
-
 DISK_GB_REQUIRED=30
 
 APT_PACKAGES=(
@@ -23,15 +21,15 @@ PIP_PACKAGES=(
 
 EXTENSIONS=(
     "https://github.com/Mikubill/sd-webui-controlnet"
-	#"https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111"
-	#"https://github.com/continue-revolution/sd-webui-animatediff"
-	"https://github.com/Bing-su/adetailer"
-	"https://github.com/opparco/stable-diffusion-webui-composable-lora"
-	"https://github.com/alemelis/sd-webui-ar"
-	"https://github.com/butaixianran/Stable-Diffusion-Webui-Civitai-Helper"
-	#"https://github.com/deforum-art/sd-webui-deforum"
+    #"https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111"
+    #"https://github.com/continue-revolution/sd-webui-animatediff"
+    "https://github.com/Bing-su/adetailer"
+    "https://github.com/opparco/stable-diffusion-webui-composable-lora"
+    "https://github.com/alemelis/sd-webui-ar"
+    "https://github.com/butaixianran/Stable-Diffusion-Webui-Civitai-Helper"
+    #"https://github.com/deforum-art/sd-webui-deforum"
     #"https://github.com/adieyal/sd-dynamic-prompts"
-	#"https://github.com/ototadana/sd-face-editor"
+    #"https://github.com/ototadana/sd-face-editor"
     #"https://github.com/AlUlkesh/stable-diffusion-webui-images-browser"
     #"https://github.com/hako-mikan/sd-webui-regional-prompter"
     #"https://github.com/Coyote-A/ultimate-upscale-for-automatic1111"
@@ -39,10 +37,10 @@ EXTENSIONS=(
 )
 
 CHECKPOINT_MODELS=(
-	"https://civitai.com/api/download/models/15640"
-	"https://civitai.com/api/download/models/15670"
-	"https://civitai.com/api/download/models/15670?type=Config&format=Other"
-	#"https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt"
+    "https://civitai.com/api/download/models/15640"
+    "https://civitai.com/api/download/models/15670"
+    "https://civitai.com/api/download/models/15670?type=Config&format=Other"
+    #"https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.ckpt"
     #"https://huggingface.co/stabilityai/stable-diffusion-2-1/resolve/main/v2-1_768-ema-pruned.ckpt"
     #"https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors"
     #"https://huggingface.co/stabilityai/stable-diffusion-xl-refiner-1.0/resolve/main/sd_xl_refiner_1.0.safetensors"
@@ -50,9 +48,9 @@ CHECKPOINT_MODELS=(
 
 LORA_MODELS=(
     #"https://civitai.com/api/download/models/16576"
-	"https://civitai.com/api/download/models/152511"
-	"https://civitai.com/api/download/models/169603"
-	"https://civitai.com/api/download/models/169604"
+    "https://civitai.com/api/download/models/152511"
+    "https://civitai.com/api/download/models/169603"
+    "https://civitai.com/api/download/models/169604"
 )
 
 VAE_MODELS=(
