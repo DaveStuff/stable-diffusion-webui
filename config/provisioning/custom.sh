@@ -223,21 +223,21 @@ function provisioning_print_end() {
 function provisioning_download() {
     if [[ -n $HF_TOKEN && $1 =~ ^https:\/\/huggingface\.co\/.*\/resolve\/.*\.(?:safetensors|bin|ckpt|onnx|pt|pkl|yaml|yml|zip)+$ ]]; then
         auth_token="$HF_TOKEN"
-		url_type=hf
+	url_type=hf
     elif
         [[ -n $CIVITAI_TOKEN && $1 =~ ^https:\/\/civitai\.com\/api\/download\/models\/[0-9]{1,6}$ ]]; then
         auth_token="$CIVITAI_TOKEN"
-		url_type=civit1
-	elif
+	url_type=civit1
+    elif
         [[ -n $CIVITAI_TOKEN && $1 =~ ^https:\/\/civitai\.com\/api\/download\/models\/[0-9]{1,6}\?(?:type=.*|&format=.*|&size=(full|pruned)|&fp=fp(16|32))+$ ]]; then
         auth_token="$CIVITAI_TOKEN"
 		url_type=civit2
     fi
     if [[ ( -n $auth_token ) || ( $url_type=hf ) ]];then
         wget --header="Authorization: Bearer $auth_token" -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1"
-	elif [[ ( -n $auth_token) || ( $url_type=civit1 ) ]];then
+    elif [[ ( -n $auth_token) || ( $url_type=civit1 ) ]];then
         wget -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1?token=$auth_token"
-	elif [[ ( -n $auth_token) || ( $url_type=civit2 ) ]];then
+    elif [[ ( -n $auth_token) || ( $url_type=civit2 ) ]];then
         wget -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1&token=$auth_token"
     else
         wget -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1"
