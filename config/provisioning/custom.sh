@@ -2,13 +2,12 @@
 # This file will be sourced in init.sh
 # Namespace functions with provisioning_
 
-# https://raw.githubusercontent.com/DaveStuff/stable-diffusion-webui/main/config/provisioning/custom.sh
-# Original version: https://raw.githubusercontent.com/ai-dock/stable-diffusion-webui/main/config/provisioning/default.sh
+# https://raw.githubusercontent.com/ai-dock/stable-diffusion-webui/main/config/provisioning/default.sh
 
 ### Edit the following arrays to suit your workflow - values must be quoted and separated by newlines or spaces.
 ### If you specify gated models you'll need to set environment variables HF_TOKEN and/orf CIVITAI_TOKEN
 
-DISK_GB_REQUIRED=60
+DISK_GB_REQUIRED=30
 
 APT_PACKAGES=(
     #"package-1"
@@ -21,7 +20,7 @@ PIP_PACKAGES=(
 )
 
 EXTENSIONS=(
-    "https://github.com/Mikubill/sd-webui-controlnet"
+    #"https://github.com/Mikubill/sd-webui-controlnet"
     #"https://github.com/pkuliyi2015/multidiffusion-upscaler-for-automatic1111"
     #"https://github.com/continue-revolution/sd-webui-animatediff"
     "https://github.com/Bing-su/adetailer"
@@ -220,22 +219,27 @@ function provisioning_print_end() {
     printf "\nProvisioning complete:  Web UI will start now\n\n"
 }
 
-
 # Download from $1 URL to $2 file path
 function provisioning_download() {
-    #if [[ -n $HF_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?huggingface\.co(/|$|\?) ]]; then
-    if [[ -n $HF_TOKEN && $1 =~ ^https:\/\/huggingface\.co\/.*\.(?:ckpt|safetensors)$ ]]; then
+    if [[ -n $HF_TOKEN && $1 =~ ^https:\/\/huggingface\.co\/.*\.(safetensors|bin|ckpt|onnx|pt|pkl|yaml|yml|zip)$ ]]; then
         auth_token="$HF_TOKEN"
-    elif 
-        #[[ -n $CIVITAI_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?civitai\.com(/|$|\?) ]]; then
-        [[ -n $CIVITAI_TOKEN && $1 =~ ^https:\/\/civitai\.com\/api\/download\/models\/[0-9]{4,6}(?:$|\?type=.*&format=.*$) ]]; then
+		url_type=hf
+    elif
+        [[ -n $CIVITAI_TOKEN && $1 =~ ^https:\/\/civitai\.com\/api\/download\/models\/[0-9]{1,6}$ ]]; then
         auth_token="$CIVITAI_TOKEN"
+		url_type=civit1
+	elif
+        [[ -n $CIVITAI_TOKEN && $1 =~ ^https:\/\/civitai\.com\/api\/download\/models\/[0-9]{1,6}\?(?:type=.*|&format=.*|&size=(full|pruned)|&fp=fp(16|32))+$ ]]; then
+        auth_token="$CIVITAI_TOKEN"
+		url_type=civit2
     fi
-    if [[ -n $auth_token ]];then
-        #wget --header="Authorization: Bearer $auth_token" -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
+    if [[ ( -n $auth_token ) || ( $url_type=hf ) ]];then
+        wget --header="Authorization: Bearer $auth_token" -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1"
+	elif [[ ( -n $auth_token) || ( $url_type=civit1 ) ]];then
         wget -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1?token=$auth_token"
+	elif [[ ( -n $auth_token) || ( $url_type=civit2 ) ]];then
+        wget -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1&token=$auth_token"
     else
-        #wget -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
         wget -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1"
     fi
 }
