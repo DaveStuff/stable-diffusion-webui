@@ -231,7 +231,7 @@ function provisioning_download() {
     elif
         [[ -n $CIVITAI_TOKEN && $1 =~ ^https:\/\/civitai\.com\/api\/download\/models\/[0-9]{1,6}\?(?:type=.*|&format=.*|&size=(full|pruned)|&fp=fp(16|32))+$ ]]; then
         auth_token="$CIVITAI_TOKEN"
-		url_type=civit2
+	url_type=civit2
     fi
     if [[ ( -n $auth_token ) || ( $url_type=hf ) ]];then
         wget --header="Authorization: Bearer $auth_token" -nc --content-disposition --show-progress -e dotbytes=4M -P "$2" "$1"
