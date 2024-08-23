@@ -221,7 +221,7 @@ function provisioning_print_end() {
 
 # Download from $1 URL to $2 file path
 function provisioning_download() {
-    if [[ -n $HF_TOKEN && $1 =~ ^https:\/\/huggingface\.co\/.*\.(?:safetensors|bin|ckpt|onnx|pt|pkl|yaml|yml|zip)$ ]]; then
+    if [[ -n $HF_TOKEN && $1 =~ ^https:\/\/huggingface\.co\/.*\/resolve\/.*\.(?:safetensors|bin|ckpt|onnx|pt|pkl|yaml|yml|zip)+$ ]]; then
         auth_token="$HF_TOKEN"
 		url_type=hf
     elif
